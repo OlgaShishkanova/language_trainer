@@ -1,4 +1,31 @@
 // Override default variables before the import
-$body-bg: black;
+//$body-bg: rgba(26,171,59, 0.7);
+$turquoise: rgb(29, 151, 152);
+$dark-yellow: rgb(253, 187, 45);
 // Import Bootstrap and its default variables
-@import '~bootstrap/scss/bootstrap.scss';
+@import "~bootstrap/scss/bootstrap.scss";
+
+.text-turquoise{
+    color: $turquoise;
+}
+.border-v-gradient {
+  border-width: 5px;
+  border-style: solid;
+  border-image: linear-gradient(
+      to bottom,
+      $turquoise,
+      $dark-yellow
+    )
+    1 100%;
+}
+.border-g-gradient {
+  padding-bottom: 5px;
+  background: /* gradient can be an image */ linear-gradient(
+      to right,
+      $turquoise,
+      $dark-yellow,
+      $turquoise,
+    )
+    left bottom white no-repeat;
+  background-size: 100% 5px;
+}
