@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import Octicon, { Check, Question } from "@primer/octicons-react";
 import classNames from "classnames";
+import { GapItem } from "../components/TextForVideo/TextForVideo";
 
 interface Props {
   name: string;
+  index: number;
   id?: string;
   valueOfGap: string;
+  arrayOfGaps: GapItem[];
+  changeGapItem: (arg: string, arg2: number) => void;
 }
 
-const InputText: React.FC<Props> = ({ name, id, valueOfGap }) => {
+const InputText: React.FC<Props> = ({ name, id, valueOfGap, arrayOfGaps, changeGapItem, index }) => {
   const [inputValue, changeInputValue] = useState("");
   const [isMenuOpen, toggleMenu] = useState(false);
+
   const handleChange = (e: any) => {
     changeInputValue(e.target.value);
+    changeGapItem(e.target.value, index);
   };
 
   return (
