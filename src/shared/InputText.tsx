@@ -5,11 +5,11 @@ import { GapItem } from "../components/TextForVideo/TextForVideo";
 
 interface Props {
   name: string;
-  index: number;
+  index: string;
   id?: string;
   valueOfGap: string;
   arrayOfGaps: GapItem[];
-  changeGapItem: (arg: string, arg2: number) => void;
+  changeGapItem: (arg: string, arg2: string) => void;
 }
 
 const InputText: React.FC<Props> = ({ name, id, valueOfGap, arrayOfGaps, changeGapItem, index }) => {

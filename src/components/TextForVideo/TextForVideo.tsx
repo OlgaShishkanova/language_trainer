@@ -7,7 +7,7 @@ interface scriptWord {
   gap: boolean;
 }
 export interface GapItem {
-  key: number;
+  key: string;
   gapText: string;
   currentGapValue: string;
 }
@@ -21,14 +21,14 @@ const TextForVideo: React.FC = () => {
         if (word.gap) {
           changeArrayOfGaps(arrayOfGaps =>[
             ...arrayOfGaps,
-            { key: innerKey*(key+1), gapText: word.text, currentGapValue: "" },
+            { key: `${innerKey}_${key}`, gapText: word.text, currentGapValue: "" },
           ]);
         }
       });
     });
   }, []);
 
-  const changeGapItem = (value: string, key: number) => {
+  const changeGapItem = (value: string, key: string) => {
     changeArrayOfGaps((arrayOfGaps) =>
       arrayOfGaps.map((el) =>
         el.key === key ? { ...el, currentGapValue: value } : el
@@ -46,10 +46,10 @@ const TextForVideo: React.FC = () => {
               {phrase.map((word, innerKey) => {
                 const { text, gap } = word as scriptWord;
                 return (
-                  <span key={innerKey*(key+1)}>
+                  <span key={`${innerKey}_${key}`}>
                     {gap ? (
                       <InputText
-                        index={innerKey*(key+1)}
+                        index={`${innerKey}_${key}`}
                         changeGapItem={changeGapItem}
                         arrayOfGaps={arrayOfGaps}
                         name="gap_for_word"
