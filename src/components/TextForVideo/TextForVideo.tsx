@@ -35,7 +35,6 @@ const TextForVideo: React.FC = () => {
       )
     );
   };
-
   return (
     <div className="">
       <h2 className="h3">Fill the gaps</h2>
@@ -54,6 +53,7 @@ const TextForVideo: React.FC = () => {
                         arrayOfGaps={arrayOfGaps}
                         name="gap_for_word"
                         valueOfGap={text}
+                        currentValue={arrayOfGaps.find(i => i.key === `${innerKey}_${key}`)?.currentGapValue || ''}
                       />
                     ) : (
                       <span>{text} </span>

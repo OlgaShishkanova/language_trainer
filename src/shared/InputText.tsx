@@ -1,35 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Octicon, { Check, Question } from "@primer/octicons-react";
 import classNames from "classnames";
 import { GapItem } from "../components/TextForVideo/TextForVideo";
+import { compareStrings } from "../utils/utilityFunctions";
 
 interface Props {
   name: string;
   index: string;
+  currentValue: string;
   id?: string;
   valueOfGap: string;
   arrayOfGaps: GapItem[];
   changeGapItem: (arg: string, arg2: string) => void;
 }
 
-const InputText: React.FC<Props> = ({ name, id, valueOfGap, arrayOfGaps, changeGapItem, index }) => {
-  const [inputValue, changeInputValue] = useState("");
+const InputText: React.FC<Props> = ({
+  name,
+  id,
+  valueOfGap,
+  arrayOfGaps,
+  changeGapItem,
+  index,
+  currentValue,
+}) => {
   const [isMenuOpen, toggleMenu] = useState(false);
+  const [isAnswerRight, checkAnswer] = useState<string>("");
 
   const handleChange = (e: any) => {
-    changeInputValue(e.target.value);
     changeGapItem(e.target.value, index);
   };
+  const checkTheCurrentAnswer = () => {
+    if (compareStrings(currentValue, valueOfGap)) {
+      checkAnswer("right");
+      //changeGapItem(valueOfGap, index);
+    } else {
+      checkAnswer("wrong");
+    }
+  };
+  useEffect(() => {
+    if (currentValue !== valueOfGap && isAnswerRight !== "") {
+      checkAnswer("");
+    }
+  }, [currentValue]);
 
   return (
     <div className="d-inline-block">
       <div className="input-group input-group-sm mr-2 mb-1 w-auto">
         <input
-          className="form-control d-inline-block w-auto"
+          className={classNames(
+            "form-control d-inline-block w-auto",
+            { "text-white bg-success": isAnswerRight === "right" },
+            { "text-white bg-danger": isAnswerRight === "wrong" }
+          )}
           aria-label="Text input with segmented dropdown button"
           type="text"
           //id={id}
-          value={inputValue}
+          value={currentValue}
           name={name}
           onChange={handleChange}
           onKeyDown={(e) => e.keyCode === 13 && handleChange}
@@ -39,7 +65,8 @@ const InputText: React.FC<Props> = ({ name, id, valueOfGap, arrayOfGaps, changeG
             type="button"
             title="Check the answer"
             className="btn btn-outline-primary"
-            disabled={inputValue === ""}
+            disabled={currentValue === ""}
+            onClick={checkTheCurrentAnswer}
           >
             <Octicon icon={Check} />
           </button>
@@ -63,6 +90,7 @@ const InputText: React.FC<Props> = ({ name, id, valueOfGap, arrayOfGaps, changeG
             <div className="dropdown-item">Show the First Letter</div>
             <div className="dropdown-item">Show the Last Letter</div>
             <div className="dropdown-item">Length of the Word</div>
+            <div className="dropdown-item">Show the Word</div>
           </div>
         </div>
       </div>
@@ -70,4 +98,4 @@ const InputText: React.FC<Props> = ({ name, id, valueOfGap, arrayOfGaps, changeG
   );
 };
 
-export default InputText;
+export default React.memo(InputText);
