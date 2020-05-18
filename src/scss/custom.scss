@@ -8,12 +8,7 @@ $dark-yellow: rgb(253, 187, 45);
 .border-v-gradient {
   border-width: 5px;
   border-style: solid;
-  border-image: linear-gradient(
-      to bottom,
-      $primary,
-      $dark-yellow
-    )
-    1 100%;
+  border-image: linear-gradient(to bottom, $primary, $dark-yellow) 1 100%;
 }
 .border-g-gradient {
   padding-bottom: 5px;
@@ -21,11 +16,46 @@ $dark-yellow: rgb(253, 187, 45);
       to right,
       $primary,
       $dark-yellow,
-      $primary,
+      $primary
     )
     left bottom white no-repeat;
   background-size: 100% 5px;
 }
-.btn:disabled{
+.btn:disabled {
   cursor: not-allowed;
+}
+.custom-input {
+  font: 5ch consolas, monospace;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0 !important;
+  letter-spacing: 0.5ch;
+  box-shadow: none !important;
+  &__underline {
+    &--separated {
+      border-bottom: none;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-left: .5rem;
+      background: repeating-linear-gradient(
+          90deg,
+          dimgrey 0,
+          dimgrey 1ch,
+          transparent 0,
+          transparent 1.5ch
+        )
+        0 100%/100% 2px no-repeat;
+        &:focus{
+          background: repeating-linear-gradient(
+          90deg,
+          #56dedf 0,
+          #56dedf 1ch,
+          transparent 0,
+          transparent 1.5ch
+        )
+        0 100%/100% 2px no-repeat;
+        }
+    }
+  }
 }

@@ -23,12 +23,24 @@ const InputText: React.FC<Props> = ({
   index,
   currentValue,
 }) => {
-  const [isMenuOpen, toggleMenu] = useState(false);
+  const [isMenuOpen, toggleMenu] = useState<boolean>(false);
+  const [isWordLengthShown, showWordLength] = useState<boolean>(false);
+  const [isAnswerShown, changeIsAnswerShown] = useState<boolean>(false);
   const [isAnswerRight, checkAnswer] = useState<string>("");
 
   const handleChange = (e: any) => {
     changeGapItem(e.target.value, index);
   };
+  const showFirstLetter = () => {
+    changeGapItem(valueOfGap.charAt(0) + currentValue, index);
+    toggleMenu(false);
+  };
+  const showTheAnswer = () => {
+    changeGapItem(valueOfGap, index);
+    changeIsAnswerShown(true);
+    toggleMenu(false);
+  };
+
   const checkTheCurrentAnswer = () => {
     if (compareStrings(currentValue, valueOfGap)) {
       checkAnswer("right");
@@ -48,18 +60,27 @@ const InputText: React.FC<Props> = ({
       <div className="input-group input-group-sm mr-2 mb-1 w-auto">
         <input
           className={classNames(
-            "form-control d-inline-block w-auto",
-            { "text-white bg-success": isAnswerRight === "right" },
-            { "text-white bg-danger": isAnswerRight === "wrong" }
+            "form-control d-inline-block",
+            { "text-success": isAnswerRight === "right" },
+            { "text-danger": isAnswerRight === "wrong" },
+            "custom-input",
+            { "custom-input__underline--separated": isWordLengthShown }
           )}
           aria-label="Text input with segmented dropdown button"
           type="text"
+          style={{
+            width: isWordLengthShown
+              ? `${valueOfGap.length * (1 + 0.5)}ch`
+              : "auto",
+          }}
           //id={id}
           value={currentValue}
           name={name}
+          maxLength={isWordLengthShown ? valueOfGap.length : undefined}
           onChange={handleChange}
           onKeyDown={(e) => e.keyCode === 13 && handleChange}
         />
+
         <div className="input-group-append">
           <button
             type="button"
@@ -87,10 +108,29 @@ const InputText: React.FC<Props> = ({
               "d-block": isMenuOpen === true,
             })}
           >
-            <div className="dropdown-item">Show the First Letter</div>
-            <div className="dropdown-item">Show the Last Letter</div>
-            <div className="dropdown-item">Length of the Word</div>
-            <div className="dropdown-item">Show the Word</div>
+            <div
+              className={classNames("dropdown-item", {
+                disabled: currentValue.charAt(0) === valueOfGap.charAt(0),
+              })}
+              onClick={showFirstLetter}
+            >
+              Show the First Letter
+            </div>
+            {/* <div className="dropdown-item">Show the Last Letter</div> */}
+            <div
+              className={classNames("dropdown-item", {
+                disabled: isWordLengthShown,
+              })}
+              onClick={() => {
+                showWordLength(true);
+                toggleMenu(false);
+              }}
+            >
+              Length of the Word
+            </div>
+            <div className={classNames("dropdown-item", {
+                disabled: isAnswerShown && (currentValue === valueOfGap),
+              })} onClick={showTheAnswer}>Show the Answer</div>
           </div>
         </div>
       </div>
