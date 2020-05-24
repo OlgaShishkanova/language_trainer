@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import data from "../../static_data/script.json";
-import InputText from "../../shared/InputText";
+import InputInTextToFill from "../../shared/InputInTextToFill";
 
 interface scriptWord {
   text: string;
@@ -47,7 +47,7 @@ const TextForVideo: React.FC = () => {
                 return (
                   <span key={`${innerKey}_${key}`}>
                     {gap ? (
-                      <InputText
+                      <InputInTextToFill
                         index={`${innerKey}_${key}`}
                         changeGapItem={changeGapItem}
                         arrayOfGaps={arrayOfGaps}

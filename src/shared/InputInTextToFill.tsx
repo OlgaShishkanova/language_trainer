@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Octicon, { Check, Question } from "@primer/octicons-react";
 import classNames from "classnames";
 import { GapItem } from "../components/TextForVideo/TextForVideo";
 import { compareStrings } from "../utils/utilityFunctions";
+import useOutsideClick from "../hooks/useOutsideClick";
 
 interface Props {
   name: string;
@@ -14,7 +15,7 @@ interface Props {
   changeGapItem: (arg: string, arg2: string) => void;
 }
 
-const InputText: React.FC<Props> = ({
+const InputInTextToFill: React.FC<Props> = ({
   name,
   id,
   valueOfGap,
@@ -27,6 +28,11 @@ const InputText: React.FC<Props> = ({
   const [isWordLengthShown, showWordLength] = useState<boolean>(false);
   const [isAnswerShown, changeIsAnswerShown] = useState<boolean>(false);
   const [isAnswerRight, checkAnswer] = useState<string>("");
+  const ref: any = useRef();
+
+  useOutsideClick(ref, () => {
+    toggleMenu(false);
+  });
 
   const handleChange = (e: any) => {
     changeGapItem(e.target.value, index);
@@ -81,7 +87,7 @@ const InputText: React.FC<Props> = ({
           onKeyDown={(e) => e.keyCode === 13 && handleChange}
         />
 
-        <div className="input-group-append">
+        <div ref={ref} className="input-group-append">
           <button
             type="button"
             title="Check the answer"
@@ -138,4 +144,4 @@ const InputText: React.FC<Props> = ({
   );
 };
 
-export default React.memo(InputText);
+export default React.memo(InputInTextToFill);
