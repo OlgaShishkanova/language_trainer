@@ -65,6 +65,8 @@ const TextForVideo: React.FC = () => {
           );
         })}
       </div>
+
+      <button type="button" className="btn btn-primary mt-4">Check everything</button>
     </div>
   );
 };
