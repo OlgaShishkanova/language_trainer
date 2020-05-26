@@ -10,7 +10,7 @@ const VideoPage: React.FC<RouteComponentProps> = () => {
       <div className="col">
         <h2 className="h3">Watch the video</h2>
         <ReactPlayer
-          url={[{ src: "./videos/TFA.1x01(1).mp4", type: "video/mp4" }]}
+          url={[{ src: "public/videos/TFA.1x01(1).mp4", type: "video/mp4" }]}
           controls={true}
           width="100%"
           height="100%"
