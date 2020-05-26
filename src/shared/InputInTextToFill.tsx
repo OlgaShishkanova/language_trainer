@@ -12,23 +12,27 @@ interface Props {
   id?: string;
   valueOfGap: string;
   arrayOfGaps: GapItem[];
+  allChildValuesChecking: number;
   changeGapItem: (arg: string, arg2: string) => void;
+  allChildValuesShowing: number;
 }
 
 const InputInTextToFill: React.FC<Props> = ({
   name,
   id,
   valueOfGap,
-  arrayOfGaps,
+  allChildValuesChecking,
   changeGapItem,
   index,
   currentValue,
+  allChildValuesShowing,
 }) => {
   const [isMenuOpen, toggleMenu] = useState<boolean>(false);
   const [isWordLengthShown, showWordLength] = useState<boolean>(false);
   const [isAnswerShown, changeIsAnswerShown] = useState<boolean>(false);
   const [isAnswerRight, checkAnswer] = useState<string>("");
   const ref: any = useRef();
+  const isInitialMount = useRef(true);
 
   useOutsideClick(ref, () => {
     toggleMenu(false);
@@ -50,7 +54,6 @@ const InputInTextToFill: React.FC<Props> = ({
   const checkTheCurrentAnswer = () => {
     if (compareStrings(currentValue, valueOfGap)) {
       checkAnswer("right");
-      //changeGapItem(valueOfGap, index);
     } else {
       checkAnswer("wrong");
     }
@@ -60,6 +63,22 @@ const InputInTextToFill: React.FC<Props> = ({
       checkAnswer("");
     }
   }, [currentValue]);
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      checkTheCurrentAnswer();
+    }
+  }, [allChildValuesChecking]);
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      showTheAnswer();
+    }
+  }, [allChildValuesShowing]);
 
   return (
     <div className="d-inline-block">
@@ -134,9 +153,14 @@ const InputInTextToFill: React.FC<Props> = ({
             >
               Length of the Word
             </div>
-            <div className={classNames("dropdown-item", {
-                disabled: isAnswerShown && (currentValue === valueOfGap),
-              })} onClick={showTheAnswer}>Show the Answer</div>
+            <div
+              className={classNames("dropdown-item", {
+                disabled: isAnswerShown && currentValue === valueOfGap,
+              })}
+              onClick={showTheAnswer}
+            >
+              Show the Answer
+            </div>
           </div>
         </div>
       </div>

@@ -1,21 +1,21 @@
 // Override default variables before the import
 //$body-bg: rgba(26,171,59, 0.7);
 $primary: rgb(29, 151, 152);
-$dark-yellow: rgb(253, 187, 45);
+$secondary: rgb(253, 186, 43);
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";
 
 .border-v-gradient {
   border-width: 5px;
   border-style: solid;
-  border-image: linear-gradient(to bottom, $primary, $dark-yellow) 1 100%;
+  border-image: linear-gradient(to bottom, $primary, $secondary) 1 100%;
 }
 .border-g-gradient {
   padding-bottom: 5px;
   background: /* gradient can be an image */ linear-gradient(
       to right,
       $primary,
-      $dark-yellow,
+      $secondary,
       $primary
     )
     left bottom white no-repeat;
