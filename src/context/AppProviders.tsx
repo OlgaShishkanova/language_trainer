@@ -1,12 +1,19 @@
-import React from "react";
-import { AuthProvider } from "./auth-context";
-import { UserProvider } from "./user-context";
+import React from 'react';
 
-const AppProviders: React.FC = ({ children }) => {
-  return (
-    <AuthProvider>
-      <UserProvider>{children}</UserProvider>
-    </AuthProvider>
-  );
+const NotFound: React.FC = () => {
+  return <div></div>
 }
-export default AppProviders;
+
+
+// import React from "react";
+// import { AuthProvider } from "./auth-context";
+// import { UserProvider } from "./user-context";
+
+// const AppProviders: React.FC = ({ children }) => {
+//   return (
+//     <AuthProvider>
+//       <UserProvider>{children}</UserProvider>
+//     </AuthProvider>
+//   );
+// }
+// export default AppProviders;
