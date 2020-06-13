@@ -1,13 +1,9 @@
-// import React from 'react';
-
-// const NotFound: React.FC = () => {
-//   return <div></div>
-// }
 import React from "react";
 
 type ContextProps = {
   data: any;
   login: (arg1: object) => void;
+  register: (arg1: object) => void;
 };
 
 interface LoginData {
@@ -16,7 +12,7 @@ interface LoginData {
 }
 const AuthContext = React.createContext<ContextProps>({} as ContextProps);
 
-function AuthProvider(props: any) {
+const AuthProvider = (props: any) => {
   // code for pre-loading the user's information if we have their token in
   // localStorage goes here
   // 🚨 this is the important bit.
@@ -35,8 +31,11 @@ function AuthProvider(props: any) {
   const login = (data: LoginData) => {
     console.log("data is in login func", data);
   }; // make a login request
-  
-  const register = () => {}; // register the user
+
+  const register = (data: LoginData) => {
+    console.log("data is in register func", data);
+  }; // register the user
+
   const logout = () => {}; // clear the token in localStorage and the user data
   // note, I'm not bothering to optimize this `value` with React.useMemo here
   // because this is the top-most component rendered in our app and it will very

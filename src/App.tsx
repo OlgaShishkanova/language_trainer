@@ -3,6 +3,7 @@ import { Router } from "@reach/router";
 import VideoPage from "./pages/VideoPage";
 import Header from "./components/Header/Header";
 import LoginForm from "./components/Forms/LoginForm";
+import RegistrationForm from "./components/Forms/RegistrationForm";
 
 const App: React.FC = () => {
   return (
@@ -12,10 +13,10 @@ const App: React.FC = () => {
           <Router>
             <VideoPage path="/video" />
             <LoginForm path="/login" />
+            <RegistrationForm path="/registration" />
           </Router>
         </div>
     </div>
   );
 };
-
 export default App;

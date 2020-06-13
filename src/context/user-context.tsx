@@ -1,9 +1,3 @@
-// import React from 'react';
-
-// const NotFound: React.FC = () => {
-//   return <div></div>
-// }
-
 import React from 'react'
 import {useAuth} from './auth-context'
 
