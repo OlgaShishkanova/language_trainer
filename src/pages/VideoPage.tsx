@@ -7,8 +7,6 @@ import {useAuth} from '../context/auth-context';
 
 const VideoPage: React.FC<RouteComponentProps> = () => {
   //TO DO: functionality for playbackRate. At least to add 0.5 speed
-
-  console.log('!!useUser', useUser(), useAuth());
   return (
     <div className="row">
       <div className="col-12 col-md-6">

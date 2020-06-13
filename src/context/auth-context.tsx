@@ -3,12 +3,18 @@
 // const NotFound: React.FC = () => {
 //   return <div></div>
 // }
-import React from 'react';
+import React from "react";
 
-type ContextProps = { 
-  data: any
+type ContextProps = {
+  data: any;
+  login: (arg1: object) => void;
 };
-const AuthContext = React.createContext<Partial<ContextProps>>({});
+
+interface LoginData {
+  userLoginEmail: string;
+  userLoginPass: string;
+}
+const AuthContext = React.createContext<ContextProps>({} as ContextProps);
 
 function AuthProvider(props: any) {
   // code for pre-loading the user's information if we have their token in
@@ -20,23 +26,31 @@ function AuthProvider(props: any) {
   // while we go retrieve that user's information.
   const isLoader = false;
   if (isLoader) {
-    return <div className="spinner-border" role="status">
-    <span className="sr-only">Loading...</span>
-  </div>
+    return (
+      <div className="spinner-border" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+    );
   }
-  const login = () => {} // make a login request
-  const register = () => {} // register the user
-  const logout = () => {} // clear the token in localStorage and the user data
+  const login = (data: LoginData) => {
+    console.log("data is in login func", data);
+  }; // make a login request
+  
+  const register = () => {}; // register the user
+  const logout = () => {}; // clear the token in localStorage and the user data
   // note, I'm not bothering to optimize this `value` with React.useMemo here
   // because this is the top-most component rendered in our app and it will very
   // rarely re-render/cause a performance problem.
-  const data = {user:{"name": 'John', "age": 25}}
+  const data = { user: { name: "John", age: 25 } };
   return (
-    <AuthContext.Provider value={{data, login, logout, register}} {...props} />
-  )
+    <AuthContext.Provider
+      value={{ data, login, logout, register }}
+      {...props}
+    />
+  );
 }
-const useAuth = () => React.useContext(AuthContext)
-export {AuthProvider, useAuth}
+const useAuth = () => React.useContext(AuthContext);
+export { AuthProvider, useAuth };
 // the UserProvider in user-context.js is basically:
 // const UserProvider = props => (
 //   <UserContext.Provider value={useAuth().data.user} {...props} />
