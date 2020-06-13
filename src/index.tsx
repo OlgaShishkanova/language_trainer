@@ -2,14 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import "./scss/custom.scss";
-//import AppProviders from "./context";
+import AppProviders from "./context/AppProviders";
 
 ReactDOM.render(
   <React.StrictMode>
-     <App />
-    {/* <AppProviders>
+    <AppProviders>
       <App />
-    </AppProviders> */}
+    </AppProviders>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,27 +1,27 @@
-import React from 'react';
+// import React from 'react';
 
-const NotFound: React.FC = () => {
-  return <div></div>
+// const NotFound: React.FC = () => {
+//   return <div></div>
+// }
+
+import React from 'react'
+import {useAuth} from './auth-context'
+
+const UserContext = React.createContext({})
+
+const UserProvider = (props: any) => {
+  const {
+    data
+  } = useAuth()
+  return <UserContext.Provider value={data?.user} {...props} />
 }
 
-// import React from 'react'
-// import {useAuth} from './auth-context'
+const useUser = () => {
+  const context = React.useContext(UserContext)
+  if (context === undefined) {
+    throw new Error(`useUser must be used within a UserProvider`)
+  }
+  return context
+}
 
-// const UserContext = React.createContext('')
-
-// function UserProvider(props) {
-//   const {
-//     data: {user},
-//   } = useAuth()
-//   return <UserContext.Provider value={user} {...props} />
-// }
-
-// function useUser() {
-//   const context = React.useContext(UserContext)
-//   if (context === undefined) {
-//     throw new Error(`useUser must be used within a UserProvider`)
-//   }
-//   return context
-// }
-
-// export {UserProvider, useUser}
+export {UserProvider, useUser}

@@ -63,7 +63,6 @@ const TextForVideo: React.FC = () => {
                 const { text, gap } = word as scriptWord;
                 const gapTextWithPunctuation =
                   gap && text.match(regexPunctuation) !== null;
-                  console.log('gapTextWithPunctuation',gap && text.split(regexPunctuation))
                 return (
                   <span key={`${innerKey}_${key}`}>
                     {gap ? (
