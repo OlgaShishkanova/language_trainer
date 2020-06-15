@@ -2,13 +2,19 @@ import React from "react";
 
 type ContextProps = {
   data: any;
-  login: (arg1: object) => void;
-  register: (arg1: object) => void;
+  login: (arg1: LoginData) => void;
+  register: (arg1: LoginData & extraRegistrationData) => void;
+  remindThePassword: (arg1: Partial<LoginData>) => void;
+  createNewPassword: (arg1: Partial<extraRegistrationData>) => void;
 };
 
 interface LoginData {
-  userLoginEmail: string;
-  userLoginPass: string;
+  userEmail: string;
+  userPass: string;
+}
+interface extraRegistrationData {
+  userName: string;
+  userPassRepeat: string;
 }
 const AuthContext = React.createContext<ContextProps>({} as ContextProps);
 
@@ -32,9 +38,17 @@ const AuthProvider = (props: any) => {
     console.log("data is in login func", data);
   }; // make a login request
 
-  const register = (data: LoginData) => {
+  const register = (data: LoginData & extraRegistrationData) => {
     console.log("data is in register func", data);
   }; // register the user
+
+  const remindThePassword = (data: Partial<LoginData>) => {
+    console.log("data is in remind the password func", data);
+  }; //remind the password
+
+  const createNewPassword = (data: Partial<extraRegistrationData>) => {
+    console.log("data is in cretae new password func", data);
+  };
 
   const logout = () => {}; // clear the token in localStorage and the user data
   // note, I'm not bothering to optimize this `value` with React.useMemo here
@@ -43,7 +57,7 @@ const AuthProvider = (props: any) => {
   const data = { user: { name: "John", age: 25 } };
   return (
     <AuthContext.Provider
-      value={{ data, login, logout, register }}
+      value={{ data, login, logout, register, remindThePassword, createNewPassword }}
       {...props}
     />
   );

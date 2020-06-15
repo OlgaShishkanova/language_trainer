@@ -18,11 +18,11 @@ const LoginForm: React.FC<RouteComponentProps> = () => {
       <div className="row justify-content-center">
         <form className="col-12 col-md-6 p-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
-            <label htmlFor="userLoginEmailId">Email address</label>
+            <label htmlFor="userEmailId">Email address</label>
             <input
               className="form-control"
-              name="userLoginEmail"
-              id="userLoginEmailId"
+              name="userEmail"
+              id="userEmailId"
               ref={register({
                 required: "This field is required",
                 pattern: {
@@ -31,32 +31,36 @@ const LoginForm: React.FC<RouteComponentProps> = () => {
                 },
               })}
             />
-            {errors.userLoginEmail && errors.userLoginEmail.message && (
+            {errors.userEmail && errors.userEmail.message && (
               <small className="text-danger">
-                {errors.userLoginEmail.message}
+                {errors.userEmail.message}
               </small>
             )}
           </div>
 
           <div className="form-group">
-            <label htmlFor="userLoginPassId">Password</label>
+            <label htmlFor="userPassId">Password</label>
             <input
               type="password"
               autoComplete="on"
               className="form-control"
-              name="userLoginPass"
-              id="userLoginPassId"
+              name="userPass"
+              id="userPassId"
               ref={register({
                 required: true,
               })}
             />
-            {errors.userLoginPass && (
+            {errors.userPass && (
               <small className="text-danger">This field is required</small>
             )}
           </div>
 
           <small className="form-text text-muted mb-4">
             First time? <Link to="/registration">To registration.</Link>
+          </small>
+
+          <small className="form-text text-muted mb-4">
+            <Link to="/forgot-password">Forgot password?</Link>
           </small>
 
           <div className="text-center">
