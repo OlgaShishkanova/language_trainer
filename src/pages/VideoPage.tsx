@@ -5,7 +5,7 @@ import TextForVideo from "../components/TextForVideo/TextForVideo";
 import SpeedBtn from "../shared/SpeedBtn";
 
 const VideoPage: React.FC<RouteComponentProps> = () => {
-  //TO DO: functionality for playbackRate. At least to add 0.5 speed
+
   const [playbackRate, changePlaybackRate] = useState<number>(1);
   return (
     <div className="row">
@@ -16,6 +16,7 @@ const VideoPage: React.FC<RouteComponentProps> = () => {
           controls={true}
           width="100%"
           height="100%"
+          //light={true}
           playbackRate={playbackRate}
           config={{
             file: {
