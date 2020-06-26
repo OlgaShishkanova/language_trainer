@@ -10,7 +10,7 @@ const ForgotPassword: React.FC<RouteComponentProps> = () => {
   const searchParams = parse(location.search);
   const token = searchParams?.token
 
-  //TODO: check token function
+  //TODO: checkToken function
   //TODO: redirection to NotFound page if token doesn't work
 
   return <div>{token ? <CreateNewPassword /> : <RemindPasswordForm />}</div>;
