@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 
 type ContextProps = {
   data: any;
+  logout: () => void;
   login: (arg1: LoginData) => void;
   register: (arg1: LoginData & extraRegistrationData) => void;
   remindThePassword: (arg1: Partial<LoginData>) => void;
@@ -26,6 +27,7 @@ const AuthProvider = (props: any) => {
   // But we post-pone rendering any of the children until after we've determined
   // whether or not we have a user token and if we do, then we render a spinner
   // while we go retrieve that user's information.
+  const [data, changeData] = useState<any>({});
   const isLoader = false;
   if (isLoader) {
     return (
@@ -36,6 +38,7 @@ const AuthProvider = (props: any) => {
   }
   const login = (data: LoginData) => {
     console.log("data is in login func", data);
+    changeData({ user: { name: "John", age: 25 } })
   }; // make a login request
 
   const register = (data: LoginData & extraRegistrationData) => {
@@ -47,21 +50,30 @@ const AuthProvider = (props: any) => {
   }; //remind the password
 
   const createNewPassword = (data: Partial<extraRegistrationData>) => {
-    console.log("data is in cretae new password func", data);
+    console.log("data is in create new password func", data);
   };
 
-  const logout = () => {}; // clear the token in localStorage and the user data
+  const logout = () => {
+    console.log("data is in logout func");
+    changeData({})
+  }; // clear the token in localStorage and the user data
   // note, I'm not bothering to optimize this `value` with React.useMemo here
   // because this is the top-most component rendered in our app and it will very
   // rarely re-render/cause a performance problem.
-  const data = { user: { name: "John", age: 25 } };
   return (
     <AuthContext.Provider
-      value={{ data, login, logout, register, remindThePassword, createNewPassword }}
+      value={{
+        data,
+        login,
+        logout,
+        register,
+        remindThePassword,
+        createNewPassword,
+      }}
       {...props}
     />
   );
-}
+};
 const useAuth = () => React.useContext(AuthContext);
 export { AuthProvider, useAuth };
 // the UserProvider in user-context.js is basically:

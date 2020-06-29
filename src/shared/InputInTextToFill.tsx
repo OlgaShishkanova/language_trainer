@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import Octicon, { Check, Question } from "@primer/octicons-react";
+import { FaCheck, FaQuestion } from "react-icons/fa";
 import classNames from "classnames";
 import { GapItem } from "../components/TextForVideo/TextForVideo";
 import { compareStrings } from "../utils/utilityFunctions";
@@ -110,22 +110,22 @@ const InputInTextToFill: React.FC<Props> = ({
           <button
             type="button"
             title="Check the answer"
-            className="btn btn-outline-primary"
+            className="btn btn-outline-primary d-flex align-items-center"
             disabled={currentValue === ""}
             onClick={checkTheCurrentAnswer}
           >
-            <Octicon icon={Check} />
+            <FaCheck/>
           </button>
           <button
             title="Choose the hint"
             type="button"
-            className="btn btn-outline-primary"
+            className="btn btn-outline-primary d-flex align-items-center"
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
             onClick={() => toggleMenu(!isMenuOpen)}
           >
-            <Octicon icon={Question} />
+            <FaQuestion/>
           </button>
 
           <div

@@ -28,8 +28,8 @@ const VideoCatalog: React.FC<RouteComponentProps> = () => {
       <div>
         PLACE FOR SEARCH
       </div>
-      {videoArr.map((el) => {
-        return <VideoPreviewCard item={el} />;
+      {videoArr.map((el, key) => {
+        return <VideoPreviewCard key={key} item={el} />;
       })}
     </div>
   );
