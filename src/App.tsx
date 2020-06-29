@@ -12,7 +12,7 @@ const App: React.FC = () => {
   return (
     <div className="">
       <Header />
-      <div className="container border-v-gradient vh-100 pt-4">
+      <div className="container border-v-gradient min-vh-100 pt-4">
         <Router>
           <VideoCatalog path="/" />
           <VideoPage path="/video" />

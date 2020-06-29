@@ -62,3 +62,6 @@ $secondary: rgb(253, 186, 43);
 .darker-light{
   background-color: darken($light, 10%) !important;
 }
+.min-vh-100{
+  min-height: 100vh;
+}
