@@ -8,6 +8,7 @@ import RegistrationForm from "./components/Forms/RegistrationForm";
 import ForgotPassword from "./components/Forms/ForgotPassword/ForgotPassword";
 import NotFound from "./pages/NotFound";
 import VideoCatalog from "./pages/VideoCatalog";
+import SettingsForm from "./components/Forms/SettingsForm";
 
 const App: React.FC = () => {
   return (
@@ -21,6 +22,7 @@ const App: React.FC = () => {
             <LoginForm path="/login" />
             <RegistrationForm path="/registration" />
             <ForgotPassword path="/forgot-password" />
+            <SettingsForm path="/settings"/>
             <NotFound path="/404" />
           </Router>
         </div>

@@ -37,9 +37,9 @@ const Header: React.FC = () => {
                 })}
                 aria-labelledby="dropdownMenuButton"
               >
-                <a className="dropdown-item" href="#">
-                  Action
-                </a>
+                <Link to='/settings' className="dropdown-item">
+                  Settings
+                </Link>
                 <a className="dropdown-item" href="#">
                   Another action
                 </a>

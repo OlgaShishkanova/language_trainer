@@ -5,6 +5,7 @@ type ContextProps = {
   logout: () => void;
   login: (arg1: LoginData) => void;
   register: (arg1: LoginData & extraRegistrationData) => void;
+  updateInfo: (arg1:Partial<LoginData> & Partial<extraRegistrationData>) => void;
   remindThePassword: (arg1: Partial<LoginData>) => void;
   createNewPassword: (arg1: Partial<extraRegistrationData>) => void;
 };
@@ -38,7 +39,12 @@ const AuthProvider = (props: any) => {
   }
   const login = (data: LoginData) => {
     console.log("data is in login func", data);
-    changeData({ user: { name: "John", age: 25 } })
+    changeData({ user: { name: "John", email: 'example@test.com' } })
+  }; // make a login request
+
+  const updateInfo = (data: Partial<LoginData> & Partial<extraRegistrationData>) => {
+    console.log("data is in updateInfo func", data);
+    changeData({ user: { name: "Jack", email: 'example@test2.com', interfaceLang: 'en', learningLang: 'de' } })
   }; // make a login request
 
   const register = (data: LoginData & extraRegistrationData) => {
@@ -69,6 +75,7 @@ const AuthProvider = (props: any) => {
         register,
         remindThePassword,
         createNewPassword,
+        updateInfo
       }}
       {...props}
     />
