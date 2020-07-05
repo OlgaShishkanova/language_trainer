@@ -10,8 +10,6 @@ import NotFound from "./pages/NotFound";
 import VideoCatalog from "./pages/VideoCatalog";
 
 const App: React.FC = () => {
-  //@ts-ignore
-  console.log('lang', window?.navigator?.userLanguage || window?.navigator?.language)
   return (
     <div className="">
       <Suspense fallback={null}>

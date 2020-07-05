@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { RouteComponentProps } from "@reach/router";
+import { RouteComponentProps, navigate } from "@reach/router";
 import { useAuth } from "../../context/auth-context";
 import { Link } from "@reach/router";
 
@@ -8,9 +8,16 @@ const LoginForm: React.FC<RouteComponentProps> = () => {
   const { register, handleSubmit, errors } = useForm();
 
   const loginFunc = useAuth()?.login;
+  const data = useAuth()?.data;
   const onSubmit = (data: any) => {
     loginFunc(data);
   };
+
+  useEffect(() => {
+    if (data?.user) {
+      navigate(`/`);
+    }
+  }, [data?.user]);
 
   return (
     <div>
@@ -32,9 +39,7 @@ const LoginForm: React.FC<RouteComponentProps> = () => {
               })}
             />
             {errors.userEmail && errors.userEmail.message && (
-              <small className="text-danger">
-                {errors.userEmail.message}
-              </small>
+              <small className="text-danger">{errors.userEmail.message}</small>
             )}
           </div>
 
