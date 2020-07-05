@@ -1,8 +1,11 @@
 import React from "react";
 import { RouteComponentProps } from "@reach/router";
 import VideoPreviewCard from "../components/VideoCatalog/VideoPreviewCard";
+import { useTranslation } from 'react-i18next'
 
 const VideoCatalog: React.FC<RouteComponentProps> = () => {
+  const { t, i18n } = useTranslation();
+
   //TODO: get the array of video here (language as a param)
   const videoArr = [
     {
@@ -25,6 +28,7 @@ const VideoCatalog: React.FC<RouteComponentProps> = () => {
 
   return (
     <div>
+      {t('thank')}
       <div>
         PLACE FOR SEARCH
       </div>
