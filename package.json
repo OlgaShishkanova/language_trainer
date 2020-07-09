@@ -17,7 +17,6 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
-    "express": "^4.17.1",
     "i18next": "^19.5.4",
     "i18next-xhr-backend": "^3.2.2",
     "node-sass": "^4.14.1",
@@ -30,6 +29,19 @@
     "react-player": "^2.0.1",
     "react-scripts": "3.4.1",
     "typescript": "^3.7.5"
+  },
+  "devDependencies": {
+    "express": "^4.17.1",
+    "concurrently": "^5.2.0",
+    "morgan": "^1.10.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "passport": "^0.4.1",
+    "mongoose": "^5.9.22",
+    "password-hash": "^1.2.2",
+    "passport-local": "^1.0.0",
+    "passport-jwt": "^4.0.0",
+    "jsonwebtoken": "^8.5.1"
   },
   "scripts": {
     "start": "concurrently --kill-others \"npm run be-start\" \"npm run fe-start\"",
@@ -54,8 +66,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "concurrently": "^5.2.0"
   }
 }
