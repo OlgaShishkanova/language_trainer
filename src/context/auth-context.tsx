@@ -1,11 +1,14 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 type ContextProps = {
   data: any;
   logout: () => void;
   login: (arg1: LoginData) => void;
   register: (arg1: LoginData & extraRegistrationData) => void;
-  updateInfo: (arg1:Partial<LoginData> & Partial<extraRegistrationData>) => void;
+  updateInfo: (
+    arg1: Partial<LoginData> & Partial<extraRegistrationData>
+  ) => void;
   remindThePassword: (arg1: Partial<LoginData>) => void;
   createNewPassword: (arg1: Partial<extraRegistrationData>) => void;
 };
@@ -39,16 +42,41 @@ const AuthProvider = (props: any) => {
   }
   const login = (data: LoginData) => {
     console.log("data is in login func", data);
-    changeData({ user: { name: "John", email: 'example@test.com' } })
+    axios
+      .post("/api/login", { ...data })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    changeData({ user: { name: "John", email: "example@test.com" } });
   }; // make a login request
 
-  const updateInfo = (data: Partial<LoginData> & Partial<extraRegistrationData>) => {
+  const updateInfo = (
+    data: Partial<LoginData> & Partial<extraRegistrationData>
+  ) => {
     console.log("data is in updateInfo func", data);
-    changeData({ user: { name: "Jack", email: 'example@test2.com', interfaceLang: 'en', learningLang: 'de' } })
+    changeData({
+      user: {
+        name: "Jack",
+        email: "example@test2.com",
+        interfaceLang: "en",
+        learningLang: "de",
+      },
+    });
   }; // make a login request
 
   const register = (data: LoginData & extraRegistrationData) => {
-    console.log("data is in register func", data);
+    axios
+      .post("/api/signup", { ...data })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }; // register the user
 
   const remindThePassword = (data: Partial<LoginData>) => {
@@ -61,7 +89,7 @@ const AuthProvider = (props: any) => {
 
   const logout = () => {
     console.log("data is in logout func");
-    changeData({})
+    changeData({});
   }; // clear the token in localStorage and the user data
   // note, I'm not bothering to optimize this `value` with React.useMemo here
   // because this is the top-most component rendered in our app and it will very
@@ -75,7 +103,7 @@ const AuthProvider = (props: any) => {
         register,
         remindThePassword,
         createNewPassword,
-        updateInfo
+        updateInfo,
       }}
       {...props}
     />
