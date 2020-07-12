@@ -1,19 +1,26 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "@reach/router";
 import { FaUserNinja } from "react-icons/fa";
 import classNames from "classnames";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import { useAuth } from "../../context/auth-context";
+import { useDispatch } from "react-redux";
+import { getUser } from "../../store/user/actions";
 
 const Header: React.FC = () => {
   const [isMenuOpen, toggleMenu] = useState<boolean>(false);
   const dropdownRef: any = useRef();
   const user = useAuth()?.data?.user;
-  const logoutFunc  = useAuth()?.logout
+  const logoutFunc = useAuth()?.logout;
+  const dispatch = useDispatch();
 
   useOutsideClick(dropdownRef, () => {
     toggleMenu(false);
   });
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
 
   return (
     <header className="shadow border-g-gradient">
@@ -37,7 +44,7 @@ const Header: React.FC = () => {
                 })}
                 aria-labelledby="dropdownMenuButton"
               >
-                <Link to='/settings' className="dropdown-item">
+                <Link to="/settings" className="dropdown-item">
                   Settings
                 </Link>
                 <a className="dropdown-item" href="#">

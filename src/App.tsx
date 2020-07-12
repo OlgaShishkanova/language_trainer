@@ -1,33 +1,26 @@
 import React, { Suspense } from "react";
-import './i18n'
-import { Router } from "@reach/router";
-import VideoPage from "./pages/VideoPage";
+import "./i18n";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import { createLogger } from "redux-logger";
+import thunk from "redux-thunk";
+import rootReducer from "./store";
 import Header from "./components/Header/Header";
-import LoginForm from "./components/Forms/LoginForm";
-import RegistrationForm from "./components/Forms/RegistrationForm";
-import ForgotPassword from "./components/Forms/ForgotPassword/ForgotPassword";
-import NotFound from "./pages/NotFound";
-import VideoCatalog from "./pages/VideoCatalog";
-import SettingsForm from "./components/Forms/SettingsForm";
+import Routes from "./Routes";
+
+const logger = createLogger();
+const store = createStore(rootReducer, applyMiddleware(thunk, logger));
 
 const App: React.FC = () => {
   return (
-    <div className="">
+    <Provider store={store}>
       <Suspense fallback={null}>
         <Header />
         <div className="container border-v-gradient min-vh-100 pt-4">
-          <Router>
-            <VideoCatalog path="/" />
-            <VideoPage path="/video" />
-            <LoginForm path="/login" />
-            <RegistrationForm path="/registration" />
-            <ForgotPassword path="/forgot-password" />
-            <SettingsForm path="/settings"/>
-            <NotFound path="/404" />
-          </Router>
+          <Routes />
         </div>
       </Suspense>
-    </div>
+    </Provider>
   );
 };
 export default App;
