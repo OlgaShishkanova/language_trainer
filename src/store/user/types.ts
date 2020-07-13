@@ -1,19 +1,27 @@
 // src/store/system/types.ts
 
 export type UserState = {
-  loggedIn: boolean;
-  session: string;
-  userName: string;
+  loading: boolean;
+  data: any;
+  errors: string;
 };
 
 export enum UserActions {
-	UPDATE_SESSION = '@@user/UPDATE_SESSION',
+  FETCH_DATA_START = "@@user/FETCH_DATA_START",
+  FETCH_DATA_SUCCESS = "@@user/FETCH_DATA_SUCCESS",
+  FETCH_DATA_ERRORS = "@@user/FETCH_DATA_ERRORS",
 }
 
-interface UserActionType<T, P> {
-	type: T;
-	payload: P;
+interface UserActionType<T> {
+  type: T;
+}
+
+interface UserActionTypeWithPayload<T, P> extends UserActionType<T> {
+  type: T;
+  payload: P;
 }
 
 export type UserAction =
-	| UserActionType<typeof UserActions.UPDATE_SESSION, boolean>
+  | UserActionType<typeof UserActions.FETCH_DATA_START>
+  | UserActionTypeWithPayload<typeof UserActions.FETCH_DATA_SUCCESS, any>
+  | UserActionTypeWithPayload<typeof UserActions.FETCH_DATA_ERRORS, string>;

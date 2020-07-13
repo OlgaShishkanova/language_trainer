@@ -71,10 +71,10 @@ const AuthProvider = (props: any) => {
   const register = (data: LoginData & extraRegistrationData) => {
     axios
       .post("/api/signup", { ...data })
-      .then(function (response) {
+      .then(response =>{
         console.log(response);
       })
-      .catch(function (error) {
+      .catch(error =>{
         console.log(error);
       });
   }; // register the user
@@ -90,10 +90,8 @@ const AuthProvider = (props: any) => {
   const logout = () => {
     console.log("data is in logout func");
     changeData({});
-  }; // clear the token in localStorage and the user data
-  // note, I'm not bothering to optimize this `value` with React.useMemo here
-  // because this is the top-most component rendered in our app and it will very
-  // rarely re-render/cause a performance problem.
+  }; 
+  
   return (
     <AuthContext.Provider
       value={{

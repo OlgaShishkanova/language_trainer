@@ -2,9 +2,9 @@ import { UserState, UserAction, UserActions } from "./types";
 import { Reducer } from "redux";
 
 const initialState: UserState = {
-  loggedIn: false,
-  session: "",
-  userName: "",
+  loading: false,
+  data: {},
+  errors: "",
 };
 
 const userReducer: Reducer<UserState, UserAction> = (
@@ -12,10 +12,22 @@ const userReducer: Reducer<UserState, UserAction> = (
   action
 ) => {
   switch (action.type) {
-    case UserActions.UPDATE_SESSION: {
+    case UserActions.FETCH_DATA_START: {
       return {
         ...state,
-        loggedIn: action.payload,
+        loading: true,
+      };
+    }
+    case UserActions.FETCH_DATA_SUCCESS: {
+      return {
+        ...state,
+        data: action.payload,
+      };
+    }
+    case UserActions.FETCH_DATA_ERRORS: {
+      return {
+        ...state,
+        errors: action.payload,
       };
     }
     default:

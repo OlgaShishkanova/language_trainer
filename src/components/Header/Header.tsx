@@ -3,24 +3,28 @@ import { Link } from "@reach/router";
 import { FaUserNinja } from "react-icons/fa";
 import classNames from "classnames";
 import useOutsideClick from "../../hooks/useOutsideClick";
-import { useAuth } from "../../context/auth-context";
-import { useDispatch } from "react-redux";
-import { getUser } from "../../store/user/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/user/actions";
+import { RootState } from "../../store/index";
 
 const Header: React.FC = () => {
   const [isMenuOpen, toggleMenu] = useState<boolean>(false);
   const dropdownRef: any = useRef();
-  const user = useAuth()?.data?.user;
-  const logoutFunc = useAuth()?.logout;
   const dispatch = useDispatch();
+
+  const { data, loading } = useSelector((state: RootState) => state.user);
+
+  console.log("data", data);
 
   useOutsideClick(dropdownRef, () => {
     toggleMenu(false);
   });
 
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
+  const user = data?.user;
+
+  // useEffect(() => {
+  //   dispatch(getUser());
+  // }, []);
 
   return (
     <header className="shadow border-g-gradient">
@@ -50,7 +54,7 @@ const Header: React.FC = () => {
                 <a className="dropdown-item" href="#">
                   Another action
                 </a>
-                <div className="dropdown-item" onClick={() => logoutFunc()}>
+                <div className="dropdown-item" onClick={() => dispatch(logout())}>
                   Log out
                 </div>
               </div>
