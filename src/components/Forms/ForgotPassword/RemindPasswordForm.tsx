@@ -1,13 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../../context/auth-context";
 
 const RemindPasswordForm: React.FC = () => {
   const { register, handleSubmit, errors } = useForm();
 
-  const remindPassFunc = useAuth()?.remindThePassword;
   const onSubmit = (data: any) => {
-    remindPassFunc(data);
+    //remindPassFunc(data);
   };
 
   return (

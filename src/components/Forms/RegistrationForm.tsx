@@ -1,14 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { RouteComponentProps } from "@reach/router";
-import { useAuth } from "../../context/auth-context";
 
 const RegistrationForm: React.FC<RouteComponentProps> = () => {
   const { register, handleSubmit, errors, watch } = useForm();
 
-  const registerFunc = useAuth()?.register;
   const onSubmit = (data: any) => {
-    registerFunc(data);
+    //registerFunc(data);
   };
 
   return (
