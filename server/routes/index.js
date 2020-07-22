@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-router.post("/profile", (req, res) => {
+router.get("/profile", (req, res) => {
   res.json(req.user);
 });
 

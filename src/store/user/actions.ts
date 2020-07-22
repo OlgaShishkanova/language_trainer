@@ -2,6 +2,8 @@ import { ActionCreator, Action, Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import axios from "axios";
 import { UserState, UserActions, UserAction } from "./types";
+import authHeader from "../../utils/authHeader";
+import { navigate } from "@reach/router";
 
 interface LoginData {
   userEmail: string;
@@ -12,14 +14,43 @@ interface extraRegistrationData {
   userPassRepeat: string;
 }
 
-export const register: ActionCreator<ThunkAction<
+export const getUser: ActionCreator<ThunkAction<
   // The type of the last action to be dispatched - will always be promise<T> for async actions
   void,
   // The type for the data within the last action
   UserState,
   // The type of the parameter for the nested function
-  LoginData & extraRegistrationData,
+  null,
   // The type of the last action to be dispatched
+  Action<UserActions.FETCH_DATA_ERRORS>
+>> = () => {
+  return async (dispatch: Dispatch<UserAction>) => {
+    if (localStorage.getItem("user")) {
+      dispatch({ type: UserActions.FETCH_DATA_START });
+      axios
+        .get("/api/profile", { headers: authHeader() })
+        .then((response) => {
+          dispatch({
+            type: UserActions.FETCH_DATA_SUCCESS,
+            payload: { user: response.data },
+          });
+        })
+        .catch((error) => {
+          dispatch({
+            type: UserActions.FETCH_DATA_ERRORS,
+            payload: error?.response?.data,
+          });
+        });
+    } else {
+      navigate(`/login`);
+    }
+  };
+};
+
+export const register: ActionCreator<ThunkAction<
+  void,
+  UserState,
+  LoginData & extraRegistrationData,
   Action<UserActions.FETCH_DATA_ERRORS>
 >> = (postData) => {
   return async (dispatch: Dispatch<UserAction>) => {
@@ -28,15 +59,20 @@ export const register: ActionCreator<ThunkAction<
     axios
       .post("/api/signup", { ...postData })
       .then((response) => {
+        if (response.data.token) {
+          localStorage.setItem("user", JSON.stringify(response.data.token));
+        }
         dispatch({
           type: UserActions.FETCH_DATA_SUCCESS,
-          payload: response.data,
+          payload: { user: response.data.user },
         });
+        navigate(`/`);
       })
+
       .catch((error) => {
         dispatch({
           type: UserActions.FETCH_DATA_ERRORS,
-          payload: error.message,
+          payload: error?.response?.data,
         });
       });
   };
@@ -54,16 +90,19 @@ export const login: ActionCreator<ThunkAction<
     axios
       .post("/api/login", { ...postData })
       .then((response) => {
+        if (response.data.token) {
+          localStorage.setItem("user", JSON.stringify(response.data.token));
+        }
         dispatch({
           type: UserActions.FETCH_DATA_SUCCESS,
-          //payload: response.data,
-          payload: { user: { name: "John", email: "example@test.com" } },
+          payload: { user: response.data.user },
         });
+        navigate(`/`);
       })
       .catch((error) => {
         dispatch({
           type: UserActions.FETCH_DATA_ERRORS,
-          payload: error.message,
+          payload: error?.response?.data,
         });
       });
   };
@@ -97,7 +136,7 @@ export const updateUserInfo: ActionCreator<ThunkAction<
       .catch((error) => {
         dispatch({
           type: UserActions.FETCH_DATA_ERRORS,
-          payload: error.message,
+          payload: error?.response?.data,
         });
       });
   };
@@ -111,7 +150,14 @@ export const updateUserInfo: ActionCreator<ThunkAction<
 //   console.log("data is in create new password func", data);
 // };
 
-export const logout = () => {
-  console.log("data is in logout func");
-  //changeData({});
+export const logout: ActionCreator<ThunkAction<
+  void,
+  UserState,
+  null,
+  Action<UserActions.CLEAR_STATE>
+>> = () => {
+  return async (dispatch: Dispatch<UserAction>) => {
+    localStorage.removeItem("user");
+    dispatch({ type: UserActions.CLEAR_STATE });
+  };
 };

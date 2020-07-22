@@ -1,12 +1,15 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { RouteComponentProps } from "@reach/router";
+import { useDispatch } from "react-redux";
+import { register as userRegister } from "../../store/user/actions";
 
 const RegistrationForm: React.FC<RouteComponentProps> = () => {
   const { register, handleSubmit, errors, watch } = useForm();
+  const dispatch = useDispatch();
 
   const onSubmit = (data: any) => {
-    //registerFunc(data);
+    dispatch(userRegister(data));
   };
 
   return (

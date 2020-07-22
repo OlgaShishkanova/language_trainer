@@ -4,7 +4,7 @@ import { Reducer } from "redux";
 const initialState: UserState = {
   loading: false,
   data: {},
-  errors: "",
+  errors: {},
 };
 
 const userReducer: Reducer<UserState, UserAction> = (
@@ -28,6 +28,11 @@ const userReducer: Reducer<UserState, UserAction> = (
       return {
         ...state,
         errors: action.payload,
+      };
+    }
+    case UserActions.CLEAR_STATE: {
+      return {
+        ...initialState,
       };
     }
     default:

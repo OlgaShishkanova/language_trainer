@@ -26,7 +26,7 @@ router.post("/signup", async (req, res, next) => {
         user.name = req.body.userName;
         user.save(function (err) {
           if (err) throw err;
-          const token = jwt.sign(user.toJSON(), config.secret);
+          const token = jwt.sign(user.id, config.secret);
           res.json({ user, token });
         });
       } catch (err) {

@@ -2,24 +2,24 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { RouteComponentProps, navigate } from "@reach/router";
 import { Link } from "@reach/router";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../store/user/actions";
+import { RootState } from "../../store/index";
 
 const LoginForm: React.FC<RouteComponentProps> = () => {
   const { register, handleSubmit, errors } = useForm();
+  const { errors: apiErrors } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
   const onSubmit = (data: any) => {
-    //loginFunc(data);
+    dispatch(login(data));
   };
-
-  // useEffect(() => {
-  //   if (data?.user) {
-  //     navigate(`/`);
-  //   }
-  // }, [data?.user]);
 
   return (
     <div>
       <h1 className="text-center">Login</h1>
       <div className="row justify-content-center">
         <form className="col-12 col-md-6 p-4" onSubmit={handleSubmit(onSubmit)}>
+          <small className="text-danger">{apiErrors.message}</small>
           <div className="form-group">
             <label htmlFor="userEmailId">Email address</label>
             <input

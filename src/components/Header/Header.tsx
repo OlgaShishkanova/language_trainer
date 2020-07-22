@@ -4,7 +4,7 @@ import { FaUserNinja } from "react-icons/fa";
 import classNames from "classnames";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../store/user/actions";
+import { logout, getUser } from "../../store/user/actions";
 import { RootState } from "../../store/index";
 
 const Header: React.FC = () => {
@@ -22,9 +22,9 @@ const Header: React.FC = () => {
 
   const user = data?.user;
 
-  // useEffect(() => {
-  //   dispatch(getUser());
-  // }, []);
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
 
   return (
     <header className="shadow border-g-gradient">
